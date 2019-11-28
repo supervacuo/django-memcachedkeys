@@ -8,23 +8,10 @@ import sys
 
 
 pkgmeta = {}
-execfile(os.path.join(os.path.dirname(__file__),
-         'memcachedkeys', 'pkgmeta.py'), pkgmeta)
-
-
-class PyTest(TestCommand):
-    def finalize_options(self):
-        TestCommand.finalize_options(self)
-        self.test_args = ['tests', '-s']
-        self.test_suite = True
-
-    def run_tests(self):
-        import pytest
-        # Make sure this package's tests module gets priority.
-        sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
-        errno = pytest.main(self.test_args)
-        sys.exit(errno)
-
+pkgmeta_path = os.path.join(os.path.dirname(__file__), 'memcachedkeys', 'pkgmeta.py')
+with open(pkgmeta_path) as f:
+    code = compile(f.read(), pkgmeta_path, 'exec')
+    exec(code, pkgmeta)
 
 class LintCommand(Command):
     """
@@ -65,11 +52,8 @@ setup(
     setup_requires=[
         'flake8',
     ],
-    tests_require=[
-        'pytest-django',
-    ],
     install_requires=[
-        'Django>=1.2',
+        'Django>=1.11',
     ],
     zip_safe=False,
     keywords='django-memcachedkeys',
@@ -86,7 +70,6 @@ setup(
         'Programming Language :: Python :: 3.3',
     ],
     cmdclass={
-        'test': PyTest,
         'lint': LintCommand,
     },
 )
