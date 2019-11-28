@@ -1,5 +1,7 @@
 language: python
-python:
-  - 2.7
-install: pip install tox --use-mirrors
+install: pip install tox-travis
 script: tox
+
+python:
+  - "2.7"
+  - "3.7"

@@ -1,3 +1,6 @@
+.. image:: https://travis-ci.org/supervacuo/django-memcachedkeys.svg?branch=python3
+    :target: https://travis-ci.org/supervacuo/django-memcachedkeys
+
 =============================
 django-memcachedkeys
 =============================
